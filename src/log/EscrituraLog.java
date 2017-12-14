@@ -23,7 +23,7 @@ public class EscrituraLog {
 	        miBufer.newLine(); //salto de línea
 	        miBufer.flush(); //cerramos con flush y close
 	        miBufer.close();
-	        //System.out.println("Fichero incidencies.log escrito");
+	        //System.out.println("Fichero incidencies.log escrito");/fhgfhgghgfhfghjfdghfgd
 	
 	    } catch (IOException ex) {
 	        ex.printStackTrace();
