@@ -16,7 +16,7 @@ public class EscrituraLog {
 	        try{
 	        	miBufer.write(frase);
 	        } catch (IOException ex) {
-	        	System.out.println("No se ha podido escribir en el fichero auxiliar "+ex);
+	        	System.out.println("No se ha podido escribir en el fichero auxiliar "+ex);//lkjbsdljndsglnjl
 	        	File f1=new File("incidencies.log");
 	        	f1.delete();
 	        }
