@@ -31,11 +31,10 @@ public class PeticionValidator {
                 writeLog(peticion);
             }
         });
-        peticionesValidas.forEach(System.out::println);
+//        peticionesValidas.forEach(System.out::println);
     }
 
     private boolean isValid(Peticion p) {
-        System.out.println("In isValid()");
         // Si la fecha de inicio o la fecha fin no tienen el mismo mes que la fecha de config.txt
         // la peticion no es valida
         if (!date.getMonth().equals(p.getFechaIni().getMonth()) || !date.getMonth().equals(p.getFechaFin().getMonth())) {
@@ -80,6 +79,7 @@ public class PeticionValidator {
 
         // Comprobar que el orden de la mascara de dias es creciente
         // Es decir, que no ponga Miercoles > Lunes > Viernes si no Lunes > Miercoles > Viernes
+
 
 
         return true;
@@ -156,5 +156,9 @@ public class PeticionValidator {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public List<Peticion> getPeticionesValidas() {
+        return peticionesValidas;
     }
 }

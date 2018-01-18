@@ -34,7 +34,7 @@ public class PeticionReader {
             System.out.println(e.getMessage());
         }
 
-        peticiones.forEach(System.out::println);
+//        peticiones.forEach(System.out::println);
     }
 
     private Peticion createPeticion(String s) {

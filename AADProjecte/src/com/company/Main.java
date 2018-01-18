@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -22,6 +23,8 @@ public class Main {
                 configReader.getDate(), configReader.getInputLang());
 
         peticionValidator.validatePeticiones();
+
+        List<Peticion> request = peticionValidator.getPeticionesValidas();
 
     }
 
