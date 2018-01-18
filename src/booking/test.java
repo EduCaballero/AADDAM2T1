@@ -20,7 +20,7 @@ public class test {
 		
 		//Fecha actual en formato completo:
         //Tue Sep 23 01:18:48 CEST 2014
-        Date fechaActual = new Date();
+        /*Date fechaActual = new Date();
         System.out.println(fechaActual);
         System.out.println("---------------------------------------------");
         
@@ -47,7 +47,9 @@ public class test {
         System.out.printf("La hora es: %02d %n", hora);
         System.out.printf("El minuto es: %02d %n", minuto);
         System.out.printf("El segundo es: %02d %n", segundo);
+		//*/
 		
+		Sala sala1 = new Sala("string", 30);
 		
 	}
 

@@ -7,22 +7,22 @@ import java.io.IOException;
 
 public class EscrituraLog {
 	
-	public void escribir(String lineaEscribir){
-	    String frase=lineaEscribir;
+	public static void escribir(String lineaEscribir){
+	    String frase=lineaEscribir; //le decimos aquí lo que vamos a escribir
 	    try {
 	        FileWriter escritura=new FileWriter("incidencies.log", true); //con true hacemos que si el fichero ya existe, le añada la información
 																				//si false, sobrescribiría el fichero entero en lugar de añadir
-	        BufferedWriter miBufer=new BufferedWriter(escritura);
+	        BufferedWriter miBuffer=new BufferedWriter(escritura);
 	        try{
-	        	miBufer.write(frase);
+	        	miBuffer.write(frase);
 	        } catch (IOException ex) {
-	        	System.out.println("No se ha podido escribir en el fichero auxiliar "+ex);//lkjbsdljndsglnjl
-	        	File f1=new File("incidencies.log");
-	        	f1.delete();
+	        	System.out.println("No se ha podido escribir en el fichero auxiliar "+ex);//Mostramos el mensaje de error si no hemos podido escribir
+	        	File f1=new File("incidencies.log"); //guardamos en la variable f1 el fichero incidencies.log para...
+	        	f1.delete();//...borrarlo aquí si ha dado error 
 	        }
-	        miBufer.newLine();
-	        miBufer.flush();
-	        miBufer.close();
+	        miBuffer.newLine(); //salto de línea
+	        miBuffer.flush(); //cerramos con flush y close
+	        miBuffer.close();
 	        //System.out.println("Fichero incidencies.log escrito");
 	
 	    } catch (IOException ex) {
@@ -30,5 +30,5 @@ public class EscrituraLog {
 	        System.out.println("ERROR: No se creó el archivo");
 	    }
 	}
-
+//
 }
