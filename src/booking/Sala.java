@@ -6,12 +6,11 @@ import java.util.Calendar;
 public class Sala {
 	
 	String nombre;
-	static int[][] calendario;
+	int[][] calendario;
 	
-	
-	public Sala(String nombre, int[][] calendario) {
+	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
-		Sala.calendario = calendario;
+		this.calendario = new int [24][horizontal];
 	}
 
 
@@ -31,10 +30,11 @@ public class Sala {
 
 
 	public void setCalendario(int[][] calendario) {
-		Sala.calendario = calendario;
+		this.calendario = calendario;
 	}
 	
-	public static int diasMes (int mes, int anyo) {
+	//días que tiene el mes
+	public int diasMes (int mes, int anyo) {
 		int numDias = 0;
 	    Calendar fecha = Calendar.getInstance();
 	    fecha.set(anyo, mes, 0);
@@ -42,12 +42,12 @@ public class Sala {
 	    return numDias;
 	}
 	
-	public static void asignarOcupado(boolean ocupado, int dia, int hora) {
+	public void asignarOcupado(boolean ocupado, int dia, int hora) {
 		if (ocupado) calendario[dia][hora]=1;
 		else EscrituraLog.escribir("mensaje de error al log");;
 	}
 	
-	public static boolean comprobarHorasLibres(int dia, int hora) {
+	public boolean comprobarHorasLibres(int dia, int hora) {
 		if (calendario[dia-1][hora]==0) {
 			//asignarOcupado();
 			//calendario[dia][hora]=1;
@@ -58,13 +58,13 @@ public class Sala {
 	}
 	
 	//Número de horas entre franjas (para hacer el bucle)
-	public static int franjaHor(int inicio, int fin) {
+	public int franjaHor(int inicio, int fin) {
 		int numHoras=fin-inicio;
 		return numHoras;
 	}
 	
 	//que día es (lunes, martes, miércoles...)
-	public static String getDia(int dia, int mes, int anyo) {
+	public String getDia(int dia, int mes, int anyo) {
 		//String devuelve = "";
 		Calendar c = Calendar.getInstance();
 		c.set(anyo, mes, dia); // vairables int
@@ -123,7 +123,7 @@ public class Sala {
     }*/
 	
 	
-public static String tradMascara(String letraD) {
+public String tradMascara(String letraD) {
 		if (letraD.equalsIgnoreCase("l")) return "lunes";
 		else if (letraD.equalsIgnoreCase("m")) return "martes";
 		else if (letraD.equalsIgnoreCase("c")) return "miercoles";
