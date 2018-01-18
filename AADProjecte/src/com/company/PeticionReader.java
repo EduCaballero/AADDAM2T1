@@ -17,7 +17,7 @@ public class PeticionReader {
         this.peticiones = new ArrayList<>();
     }
 
-    private void readPeticiones() {
+    public void readPeticiones() {
         try (Scanner sc = new Scanner(new BufferedReader(new FileReader("peticiones.txt")))) {
             while (sc.hasNext()) {
                 String s = sc.nextLine();
@@ -33,6 +33,8 @@ public class PeticionReader {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
+        peticiones.forEach(System.out::println);
     }
 
     private Peticion createPeticion(String s) {
@@ -76,7 +78,7 @@ public class PeticionReader {
 
     private void writeLog(String s) {
         try(BufferedWriter log = new BufferedWriter(new FileWriter("incidencies.log", true))) {
-            log.write("Peticion con formato incorrecto: " + s);
+            log.write("Peticion con formato incorrecto: " + s + "\n");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

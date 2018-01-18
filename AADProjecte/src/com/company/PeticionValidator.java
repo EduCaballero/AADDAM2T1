@@ -18,7 +18,7 @@ public class PeticionValidator {
 
     public PeticionValidator(List<Peticion> peticiones, LocalDate date, String lang) {
         this.peticionesValidas = new ArrayList<>();
-        this.peticionesPendientes = new ArrayList<>();
+        this.peticionesPendientes = peticiones;
         this.date = date;
         this.lang = lang;
     }
@@ -31,9 +31,11 @@ public class PeticionValidator {
                 writeLog(peticion);
             }
         });
+        peticionesValidas.forEach(System.out::println);
     }
 
     private boolean isValid(Peticion p) {
+        System.out.println("In isValid()");
         // Si la fecha de inicio o la fecha fin no tienen el mismo mes que la fecha de config.txt
         // la peticion no es valida
         if (!date.getMonth().equals(p.getFechaIni().getMonth()) || !date.getMonth().equals(p.getFechaFin().getMonth())) {
@@ -42,7 +44,9 @@ public class PeticionValidator {
 
         // Validacion mascara de dias
 
-
+        if (!validateDayMask(p.getDias())) {
+            return false;
+        }
 
         // validacion de franjas horarias
         if (!validateFranjasHorarias(p.getHoras())) return false;
@@ -62,7 +66,9 @@ public class PeticionValidator {
         boolean found = false;
         for (char day : mask) {
             found = false;
+//            System.out.println("current char = " + day);
             for (char interDay : internationalMask) {
+//                System.out.println("Is " + day + " = " + interDay);
                 if (day == interDay) {
                     found = true;
                     break;
@@ -74,6 +80,9 @@ public class PeticionValidator {
 
         // Comprobar que el orden de la mascara de dias es creciente
         // Es decir, que no ponga Miercoles > Lunes > Viernes si no Lunes > Miercoles > Viernes
+
+
+        return true;
 
 
     }
@@ -112,7 +121,7 @@ public class PeticionValidator {
 
     private void writeLog(Peticion p) {
         try(BufferedWriter log = new BufferedWriter(new FileWriter("incidencies.log", true))) {
-            log.write("Peticion con formato incorrecto: " + p.toString());
+            log.write("Peticion con formato incorrecto: " + p.toString() + "\n");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
