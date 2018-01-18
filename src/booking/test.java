@@ -16,7 +16,7 @@ public class test {
 	    Calendar fecha = Calendar.getInstance();
 	    fecha.set(anyo, mes, 0);
 	    numDias = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
-	    System.out.println("\nEl mes " + mes + " del año " + anyo + " tiene " + numDias + " días.");*/
+	    System.out.println("\nEl mes " + mes + " del aï¿½o " + anyo + " tiene " + numDias + " dï¿½as.");*/
 		
 		//Fecha actual en formato completo:
         //Tue Sep 23 01:18:48 CEST 2014
@@ -31,19 +31,19 @@ public class test {
         
         //Fecha actual desglosada:
         Calendar fecha = Calendar.getInstance();
-        int año = fecha.get(Calendar.YEAR);
+        int aÃ±o = fecha.get(Calendar.YEAR);
         int mes = fecha.get(Calendar.MONTH) + 1;
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         int minuto = fecha.get(Calendar.MINUTE);
         int segundo = fecha.get(Calendar.SECOND);
 
-        System.out.println("Fecha Actual: "+ dia + "/" + (mes) + "/" + año);
+        System.out.println("Fecha Actual: "+ dia + "/" + (mes) + "/" + aÃ±o);
         System.out.printf("Hora Actual: %02d:%02d:%02d %n", hora, minuto, segundo);
         System.out.println("-------------Fecha desglosada----------------");
-        System.out.println("El año es: "+ año);
+        System.out.println("El aÃ±o es: "+ aÃ±o);
         System.out.println("El mes es: "+ mes);
-        System.out.println("El día es: "+ dia);
+        System.out.println("El dï¿½a es: "+ dia);
         System.out.printf("La hora es: %02d %n", hora);
         System.out.printf("El minuto es: %02d %n", minuto);
         System.out.printf("El segundo es: %02d %n", segundo);
