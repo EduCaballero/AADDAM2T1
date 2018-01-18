@@ -1,14 +1,21 @@
 .open{
     background-color: greenyellow;
+    height: 20px;
+    width: 50px;
 }
 .myhours{
     background-color: pink;
+    height: 20px;
+    width: 50px;
 }
 
 .mydays{
     background-color: purple;
-   
+   height: 20px;
+    width: 50px;
 }
 .closed{
     background-color: grey; 
+    height: 20px;
+    width: 50px;
 }
