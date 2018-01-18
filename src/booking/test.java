@@ -48,7 +48,8 @@ public class test {
         System.out.printf("El minuto es: %02d %n", minuto);
         System.out.printf("El segundo es: %02d %n", segundo);
 		//*/
-		Sala sala1 = new Sala("string", 2);
+		
+		Sala sala1 = new Sala("string", 30);
 		
 	}
 
