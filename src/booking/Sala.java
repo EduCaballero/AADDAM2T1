@@ -1,4 +1,5 @@
 package booking;
+import log.EscrituraLog;
 
 import java.util.Calendar;
 
@@ -41,14 +42,15 @@ public class Sala {
 	    return numDias;
 	}
 	
-	/*public static void asignarOcupado() { //Creo que es más eficiente hacerlo directamente debajo, es una tontería hacer otra función para poner un simple 1
-		
-	}*/
+	public static void asignarOcupado(boolean ocupado, int dia, int hora) {
+		if (ocupado) calendario[dia][hora]=1;
+		else EscrituraLog.escribir("mensaje de error al log");;
+	}
 	
 	public static boolean comprobarHorasLibres(int dia, int hora) {
 		if (calendario[dia-1][hora]==0) {
 			//asignarOcupado();
-			calendario[dia][hora]=1;
+			//calendario[dia][hora]=1;
 			//setCalendario(int [dia][1]);
 			return true;
 		}
