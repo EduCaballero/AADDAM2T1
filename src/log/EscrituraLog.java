@@ -30,5 +30,5 @@ public class EscrituraLog {
 	        System.out.println("ERROR: No se creó el archivo");
 	    }
 	}
-
+//
 }

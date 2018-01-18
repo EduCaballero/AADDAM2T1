@@ -47,7 +47,7 @@ public class test {
         System.out.printf("La hora es: %02d %n", hora);
         System.out.printf("El minuto es: %02d %n", minuto);
         System.out.printf("El segundo es: %02d %n", segundo);
-		
+		//
 		
 	}
 
