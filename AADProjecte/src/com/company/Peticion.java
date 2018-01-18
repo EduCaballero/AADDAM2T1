@@ -1,6 +1,7 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 public class Peticion {
@@ -70,15 +71,9 @@ public class Peticion {
         this.horas = horas;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Peticion{" +
-//                "actividad='" + actividad + '\'' +
-//                ", espacio='" + espacio + '\'' +
-//                ", fechaIni=" + fechaIni +
-//                ", fechaFin=" + fechaFin +
-//                ", dias=" + Arrays.toString(dias) +
-//                ", horas='" + horas + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return actividad + " " + espacio + " " + fechaIni.toString() + " " +fechaFin.toString() + " " +
+                Arrays.toString(dias) + " " + String.join(" ", horas);
+    }
 }

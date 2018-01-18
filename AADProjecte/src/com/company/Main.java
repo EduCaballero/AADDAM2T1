@@ -186,25 +186,7 @@ public class Main {
         return false;
     }
 
-    static private boolean isValidDate (String fecha) {
-        String[] fechaSplit = fecha.split("/");
-        String[] configDateSplit = date.split(" ");
-        return fechaSplit[1].equals(configDateSplit[1]) && fechaSplit[2].equals(configDateSplit[0]);
-    }
 
-    static private boolean isValidFranja(String franja) {
-        String[] franjaSplit = franja.split("-");
-        int horaIni = Integer.parseInt(franjaSplit[0]);
-        int horaFin = Integer.parseInt(franjaSplit[1]);
-        if (horaIni < 0 || horaIni > 23) return false;
-        if (horaFin < 1 || horaFin > 24) return false;
-        if (horaIni >= horaFin) return false;
-        return true;
-    }
-
-    private static boolean isCollisionFree(Peticion peticion) {
-
-    }
 
 
 
