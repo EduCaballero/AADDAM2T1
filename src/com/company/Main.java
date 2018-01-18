@@ -1,5 +1,8 @@
 package com.company;
 
+import booking.Sala;
+import booking.ValidarBooking;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,7 +27,31 @@ public class Main {
 
         peticionValidator.validatePeticiones();
 
+        LocalDate fecha = configReader.getDate();
+        int dias = fecha.getMonth().length(false);
+        Sala sala1 = new Sala("Sala1", dias);
+        Sala sala2 = new Sala("Sala2", dias);
+
+        //peticiones valid
         List<Peticion> request = peticionValidator.getPeticionesValidas();
+
+        ValidarBooking validarBooking = new ValidarBooking(request);
+
+        validarBooking.validarBookingSala(sala1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

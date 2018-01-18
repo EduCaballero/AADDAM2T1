@@ -33,7 +33,7 @@ public class Sala {
 		this.calendario = calendario;
 	}
 	
-	//días que tiene el mes
+	//d?as que tiene el mes
 	public int diasMes (int mes, int anyo) {
 		int numDias = 0;
 	    Calendar fecha = Calendar.getInstance();
@@ -57,13 +57,13 @@ public class Sala {
 		else return false;		
 	}
 	
-	//Número de horas entre franjas (para hacer el bucle)
+	//N?mero de horas entre franjas (para hacer el bucle)
 	public int franjaHor(int inicio, int fin) {
 		int numHoras=fin-inicio;
 		return numHoras;
 	}
 	
-	//que día es (lunes, martes, miércoles...)
+	//que d?a es (lunes, martes, mi?rcoles...)
 	public String getDia(int dia, int mes, int anyo) {
 		//String devuelve = "";
 		Calendar c = Calendar.getInstance();
@@ -91,7 +91,7 @@ public class Sala {
 		else return "sabado";
 	}
 	
-	////////OTRA SOLUCIÓN SERÍA
+	////////OTRA SOLUCI?N SER?A
 	/*String diaSemana (int dia, int mes, int ano)  {
         String letraD="";
         //Calendar c = Calendar.getInstance();
@@ -99,9 +99,9 @@ public class Sala {
         //nD=c.get(Calendar.DAY_OF_WEEK);
         TimeZone timezone = TimeZone.getDefault();
         Calendar calendar = new GregorianCalendar(timezone);
-        calendar.set(ano, mes-1, dia); // ENERO SERÍA EL MES 0, ASÍ QUE HAY QUE -1
+        calendar.set(ano, mes-1, dia); // ENERO SER?A EL MES 0, AS? QUE HAY QUE -1
         int nD=calendar.get(Calendar.DAY_OF_WEEK);
-        //SYSO("result","diaSemana: "+nD+" dia:"+dia+" mes:"+mes+ "año:" +ano);
+        //SYSO("result","diaSemana: "+nD+" dia:"+dia+" mes:"+mes+ "a?o:" +ano);
         switch (nD){
             case 1: letraD = "D";
                 break;
