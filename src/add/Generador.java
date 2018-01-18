@@ -5,7 +5,6 @@
  */
 package add;
 
-import static booking.Sala.diasMes;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -76,7 +75,7 @@ public class Generador {
         
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
-          int diasmes = diasMes (2,2018);
+          
           String ruta = "C:\\Users\\usu\\Desktop\\ADD\\src\\add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
