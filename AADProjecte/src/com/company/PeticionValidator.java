@@ -1,11 +1,10 @@
 package com.company;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class PeticionValidator {
 
@@ -44,10 +43,39 @@ public class PeticionValidator {
         // Validacion mascara de dias
 
 
+
         // validacion de franjas horarias
         if (!validateFranjasHorarias(p.getHoras())) return false;
 
         return true;
+    }
+
+    private boolean validateDayMask(char[] mask) {
+        char[] internationalMask = readDayMask();
+        if (internationalMask == null) {
+            System.out.println("No se ha leido bien la mascara de dias del archivo internacional.EXT");
+        }
+        // comprobamos que los dias de la mascara de la peticion
+        // estan contenidos en la mascara del archivo internacional
+        // (por ejemplo, que la mascara de la peticion no tenga caracteres raros,
+        // o una W si la peticion supuestamente es en ESP y no en ENG
+        boolean found = false;
+        for (char day : mask) {
+            found = false;
+            for (char interDay : internationalMask) {
+                if (day == interDay) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) return false;
+
+        // Comprobar que el orden de la mascara de dias es creciente
+        // Es decir, que no ponga Miercoles > Lunes > Viernes si no Lunes > Miercoles > Viernes
+
+
     }
 
     private boolean validateFranjasHorarias(List<String> horas) {
@@ -88,5 +116,36 @@ public class PeticionValidator {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private char[] readDayMask() {
+        String internacionalFile;
+        switch (this.lang) {
+            case "ESP":
+                internacionalFile = "internacional.ESP";
+                break;
+            case "ENG":
+                internacionalFile = "internacional.ENG";
+                break;
+            case "CAT":
+                internacionalFile = "internacional.CAT";
+                break;
+            // No deberia ocurrir, pero en caso de que no se haya encontrado un idioma,
+            // se asumira el ESP por defecto
+            default:
+                internacionalFile = "internacional.ESP";
+        }
+
+        try(Scanner scanner = new Scanner(new BufferedReader(new FileReader(internacionalFile)))) {
+            while (scanner.hasNext()) {
+                String[] line = scanner.nextLine().split(";");
+                if (line[0].equals("003")) {
+                    return line[1].toCharArray();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
