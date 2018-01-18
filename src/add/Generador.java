@@ -97,13 +97,13 @@ public class Generador {
         for(int i = 0;i<dias.length;i++){
             Generador g = new Generador();
             g.setDia(dias[i]);
-            bw.write( "<TH>"+g.getDia()+"</TH>");
+            bw.write( "<TH class='mydays'>"+g.getDia()+"</TH>");
         }
         bw.write("</TR>");
         for(int i = 0;i<horas.length;i++){
-            bw.write( " <TR>  <TD>"+horas[i]+"</TD>");
+            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD>");
          for(int x = 0;x<dias.length;x++){
-             if(x<=5){
+             if(x<5){
                  if(i<=8){
              bw.write( "<TD class='closed'>close</TD>");     
                  }else{
