@@ -39,24 +39,25 @@ public class Generador {
        String[] dias =new String[7];
        String[] horas =new String[24];
       String idiom = "ESP";
+      //carga array de dias en funcion del idioma
       diascalendar(idiom,dias);
+      //carga array de horas
       horasCalendario(horas);
+      //genera documento html
       generarHtml(dias,horas);   
-      System.out.println(dias[0]);
-      
-      
+     
     }
 
     public static void diascalendar(String idiom,String[] dias){
         if(idiom.equals("ESP")){
          
           dias[0]="Lunes";dias[1]="Martes";dias[2]="Miercoles";dias[3]="Jueves";dias[4]="Viernes";dias[5]="Sabado";dias[6]="domingo";
-           System.out.println(dias[0]);
+          
         }
         if(idiom.equals("ENG")){
           
           dias[0]="Monday";dias[1]="Tuesday";dias[2]="Wednsday";dias[3]="Thursday";dias[4]="Friday";dias[5]="Saturday";dias[6]="Sunday"; 
-           System.out.println(dias[0]);
+           
           
         }
        
@@ -66,8 +67,9 @@ public class Generador {
           for(int i = 0; i<24;i++){
               if(x==0){
          horas[i] = "0"+i+":00 - " + i + 1 + ":00";
+         x++;
               }else{
-                horas[i] = i+ ":00 - " + i + ":00";  
+                horas[i] = i+ ":00 - " + (i + 1) + ":00";  
               }
          
           }
@@ -75,14 +77,15 @@ public class Generador {
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
           int diasmes = diasMes (2,2018);
-          String ruta = "/Applications/XAMPP/xamppfiles/htdocs/ProjectesCat/ADD/src/add/archivo.html";
+          String ruta = "C:\\Users\\usu\\Desktop\\ADD\\src\\add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
          
         
         bw.write("<HTML> \n" +
-"<HEAD> \n" +
+"<HEAD> \n "+
+"<link href=\"myStyles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +                
 "\n" +
 "</HEAD> \n" +
 "<BODY> \n" +
@@ -100,8 +103,16 @@ public class Generador {
         bw.write("</TR>");
         for(int i = 0;i<horas.length;i++){
             bw.write( " <TR>  <TD>"+horas[i]+"</TD>");
-         for(int x = 0;i<dias.length;i++){
-            bw.write( "<TD>oli</TD>");
+         for(int x = 0;x<dias.length;x++){
+             if(x<=5){
+                 if(i<=8){
+             bw.write( "<TD class='closed'>close</TD>");     
+                 }else{
+            bw.write( "<TD class='open'>open</TD>");
+                 }
+             }else{
+              bw.write( "<TD class='closed'>close</TD>");   
+             }
         }
          bw.write( "</TR>");
         }
