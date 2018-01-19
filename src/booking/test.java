@@ -49,7 +49,7 @@ public class test {
         System.out.printf("El segundo es: %02d %n", segundo);
 		//*/
 		
-		Sala sala1 = new Sala("string", 30);
+//		Sala sala1 = new Sala("string", 30);
 		
 	}
 

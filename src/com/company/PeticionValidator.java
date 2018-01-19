@@ -42,7 +42,7 @@ public class PeticionValidator {
         }
 
         // Validacion mascara de dias
-
+        System.out.println(p);
         if (!validateDayMask(p.getDias())) {
             return false;
         }
@@ -78,10 +78,24 @@ public class PeticionValidator {
         if (!found) return false;
 
         // Comprobar que el orden de la mascara de dias es creciente
-        // Es decir, que no ponga Miercoles > Lunes > Viernes si no Lunes > Miercoles > Viernes
+        // Es decir, que no ponga Miercoles > Lunes > Viernes sino Lunes > Miercoles > Viernes
 
-
-
+        String maskString = new String(mask);
+//        System.out.println("Mascara dias = " + maskString);
+        switch (lang) {
+            case "ESP":
+                if (!maskString.matches("([L])?([M])?([X])?([J])?([V])?([S])?([D])?")) {
+                    return false;
+                }
+            case "CAT":
+                if (!maskString.matches("([L])?([M])?([C])?([J])?([V])?([S])?([G])?")) {
+                   return false;
+                }
+            case "ENG":
+                if (!maskString.matches("([M])?([T])?([W])?([H])?([F])?([S])?([N])?")) {
+                    return false;
+            }
+        }
         return true;
 
 

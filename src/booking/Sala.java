@@ -4,10 +4,10 @@ import log.EscrituraLog;
 import java.util.Calendar;
 
 public class Sala {
-	
+
 	String nombre;
 	int[][] calendario;
-	
+
 	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
 		this.calendario = new int [24][horizontal];
@@ -32,7 +32,7 @@ public class Sala {
 	public void setCalendario(int[][] calendario) {
 		this.calendario = calendario;
 	}
-	
+
 	//d?as que tiene el mes
 	public int diasMes (int mes, int anyo) {
 		int numDias = 0;
@@ -41,12 +41,12 @@ public class Sala {
 	    numDias = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
 	    return numDias;
 	}
-	
+
 	public void asignarOcupado(boolean ocupado, int dia, int hora) {
 		if (ocupado) calendario[dia][hora]=1;
 		else EscrituraLog.escribir("mensaje de error al log");;
 	}
-	
+
 	public boolean comprobarHorasLibres(int dia, int hora) {
 		if (calendario[dia-1][hora]==0) {
 			//asignarOcupado();
@@ -54,15 +54,15 @@ public class Sala {
 			//setCalendario(int [dia][1]);
 			return true;
 		}
-		else return false;		
+		else return false;
 	}
-	
+
 	//N?mero de horas entre franjas (para hacer el bucle)
 	public int franjaHor(int inicio, int fin) {
 		int numHoras=fin-inicio;
 		return numHoras;
 	}
-	
+
 	//que d?a es (lunes, martes, mi?rcoles...)
 	public String getDia(int dia, int mes, int anyo) {
 		//String devuelve = "";
@@ -90,7 +90,7 @@ public class Sala {
 		}
 		else return "sabado";
 	}
-	
+
 	////////OTRA SOLUCI?N SER?A
 	/*String diaSemana (int dia, int mes, int ano)  {
         String letraD="";
@@ -121,8 +121,8 @@ public class Sala {
 
         return letraD;
     }*/
-	
-	
+
+
 public String tradMascara(String letraD) {
 		if (letraD.equalsIgnoreCase("l")) return "lunes";
 		else if (letraD.equalsIgnoreCase("m")) return "martes";
@@ -132,13 +132,13 @@ public String tradMascara(String letraD) {
 		else if (letraD.equalsIgnoreCase("s")) return "sabado";
 		else return "domingo";
 	}
-	
-	
-	
+
+
+
 	//asignarOcupado()
 	//comprobarDiasLibres()
 	//cogerMes()
 	//todo mascara dias//
-	
+
 
 }
