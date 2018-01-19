@@ -21,7 +21,7 @@ public class ValidarBooking {
         		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth());
         		boolean valido = false;
         		for (int i=0; i>franjaDias; i++) {
-        			
+        			llamadaSala.comprobarHorasLibres((p.getFechaFin().getDayOfMonth() + i), hora)
         		}
         		
         	} //else EscrituraLog.escribir("Petición incorrecta, la sala no existe" + p.toString());

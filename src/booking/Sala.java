@@ -3,10 +3,13 @@ import log.EscrituraLog;
 
 import java.util.Calendar;
 
+import com.company.Peticion;
+
 public class Sala {
 
 	String nombre;
 	int[][] calendario;
+	private Peticion p;
 
 	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
@@ -133,7 +136,12 @@ public String tradMascara(String letraD) {
 		else return "domingo";
 	}
 
-
+//hacer split de las horas
+public int splitHoras(String horaSucia) {
+	for (int i=0; i<p.getHoras().size(); i++)
+	String linea = p.getHoras();
+	return 0;	
+}
 
 	//asignarOcupado()
 	//comprobarDiasLibres()
