@@ -44,7 +44,7 @@ public class Sala {
 
 	public void asignarOcupado(boolean ocupado, int dia, int hora) {
 		if (ocupado) calendario[dia][hora]=1;
-		else EscrituraLog.escribir("mensaje de error al log");;
+		else EscrituraLog.escribir("mensaje de error al log");
 	}
 
 	public boolean comprobarHorasLibres(int dia, int hora) {

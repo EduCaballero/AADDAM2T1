@@ -7,14 +7,14 @@ import java.io.IOException;
 
 public class EscrituraLog {
 	
-	public void escribir(String lineaEscribir){
+	public static void escribir(String lineaEscribir){
 	    String frase=lineaEscribir; //le decimos aqu� lo que vamos a escribir
 	    try {
 	        FileWriter escritura=new FileWriter("incidencies.log", true); //con true hacemos que si el fichero ya existe, le a�ada la informaci�n
 																				//si false, sobrescribir�a el fichero entero en lugar de a�adir
 	        BufferedWriter miBuffer=new BufferedWriter(escritura);
 	        try{
-	        	miBuffer.write("Peticion con formato incorrecto: " + frase);
+	        	miBuffer.write(frase);
 	        } catch (IOException ex) {
 	        	System.out.println("No se ha podido escribir en el fichero auxiliar "+ex);//Mostramos el mensaje de error si no hemos podido escribir
 	        	File f1=new File("incidencies.log"); //guardamos en la variable f1 el fichero incidencies.log para...

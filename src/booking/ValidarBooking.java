@@ -8,18 +8,25 @@ import java.util.List;
 public class ValidarBooking {
 
     private List<Peticion> peticiones;
-    private EscrituraLog escrituraLog;
+    private Sala llamadaSala;
+    
 
     public ValidarBooking(List<Peticion> peticiones) {
         this.peticiones = peticiones;
-        this.escrituraLog = new EscrituraLog();
     }
 
     public void validarBookingSala(Sala sala) {
         for (Peticion p : peticiones) {
-
+        	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {
+        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth());
+        		boolean valido = false;
+        		for (int i=0; i>franjaDias; i++) {
+        			
+        		}
+        		
+        	} //else EscrituraLog.escribir("Petición incorrecta, la sala no existe" + p.toString());
             // Escribir en el log peticion con colision
-            escrituraLog.escribir(p.toString());
+            //EscrituraLog.escribir(p.toString());
         }
     }
 }
