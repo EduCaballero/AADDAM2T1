@@ -13,7 +13,8 @@ public class Sala {
 	private Peticion p;
 	static int horaIn;
 	static int horaFin;
-	String [][] partes;
+	int [][] partes;
+	int [][] horaLimpia;
 
 	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
@@ -49,8 +50,8 @@ public class Sala {
 	    return numDias;
 	}
 
-	public void asignarOcupado(boolean ocupado, int dia, int hora) {
-		if (ocupado) calendario[dia][hora]=1;
+	public void asignarLibre(boolean libre, int dia, int hora) {
+		if (libre) calendario[dia-1][hora]=1;
 		else EscrituraLog.escribir("mensaje de error al log");
 	}
 
@@ -141,7 +142,7 @@ public String tradMascara(String letraD) {
 	}
 
 //hacer split de las horas
-public int splitHoras(String horaSucia) {
+public int[][] splitHoras() {//esto me devuelve las horas limpias y en int
 	for (int i=0; i<p.getHoras().size(); i++) {
 		//String linea = p.getHoras()[i];
 		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
@@ -149,21 +150,21 @@ public int splitHoras(String horaSucia) {
 		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
 		//partes = [i][linea.split("-")]; //parto el string por "-" y
 		String[] partesSucio = linea.split("-"); //parto
-		partes = new String [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamaño que tenga getHoras y de 2, que son la horaIn y horaFin
-		for (int z=0; z>partesSucio.length; z++) {
-			partes[i][z]  = partesSucio[z];//guardo la hora ya limpia en el arraybi partes
+		partes = new int [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamaño que tenga getHoras y de 2, que son la horaIn y horaFin
+		for (int z=0; z<partesSucio.length; z++) {
+			partes[i][z]  = Integer.parseInt(partesSucio[z]);//guardo la hora ya limpia en el arraybi partes
 		}
 		//horaIn = Integer.parseInt(partes[0]); //los convierto a int y los guardo en las variables static
 		//horaFin = Integer.parseInt(partes[1]);
 	}
-	return 0;	//ARRAY BIDIMENSIONAL PARA PARTES
+	return partes;	//ARRAY BIDIMENSIONAL PARA PARTES
 }
 
 	//asignarOcupado()
 	//comprobarDiasLibres()
 	//cogerMes()
 	//todo mascara dias//
-//TODO eliminar 0 a la izquierda de las horas
+//eliminar 0 a la izquierda de las horas
 /*String cadenaOriginal = "000000543210";
 // La expresión a utilizar sería:
 cadenaResultadoString = cadenaOriginal.replaceFirst ("^0*", "");*/

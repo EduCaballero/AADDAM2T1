@@ -9,6 +9,10 @@ public class test {
 
 	public static void main(String[] args) {
 		
+		//int [][] horaLimpia = new int [4][2];
+		//System.out.println(horaLimpia.length);//saca el 4
+		
+		
 		
 		/*int mes, anyo, numDias = 0;
 	    mes = 6;
