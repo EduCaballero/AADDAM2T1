@@ -2,6 +2,7 @@ package booking;
 import log.EscrituraLog;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.company.Peticion;
 
@@ -10,6 +11,9 @@ public class Sala {
 	String nombre;
 	int[][] calendario;
 	private Peticion p;
+	static int horaIn;
+	static int horaFin;
+	String [][] partes;
 
 	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
@@ -138,15 +142,30 @@ public String tradMascara(String letraD) {
 
 //hacer split de las horas
 public int splitHoras(String horaSucia) {
-	for (int i=0; i<p.getHoras().size(); i++)
-	String linea = p.getHoras();
-	return 0;	
+	for (int i=0; i<p.getHoras().size(); i++) {
+		//String linea = p.getHoras()[i];
+		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
+		String lineaSucio = arrayList.get(i); //guardo la posición i en un string
+		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
+		//partes = [i][linea.split("-")]; //parto el string por "-" y
+		String[] partesSucio = linea.split("-"); //parto
+		partes = new String [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamaño que tenga getHoras y de 2, que son la horaIn y horaFin
+		for (int z=0; z>partesSucio.length; z++) {
+			partes[i][z]  = partesSucio[z];//guardo la hora ya limpia en el arraybi partes
+		}
+		//horaIn = Integer.parseInt(partes[0]); //los convierto a int y los guardo en las variables static
+		//horaFin = Integer.parseInt(partes[1]);
+	}
+	return 0;	//ARRAY BIDIMENSIONAL PARA PARTES
 }
 
 	//asignarOcupado()
 	//comprobarDiasLibres()
 	//cogerMes()
 	//todo mascara dias//
-
+//TODO eliminar 0 a la izquierda de las horas
+/*String cadenaOriginal = "000000543210";
+// La expresión a utilizar sería:
+cadenaResultadoString = cadenaOriginal.replaceFirst ("^0*", "");*/
 
 }

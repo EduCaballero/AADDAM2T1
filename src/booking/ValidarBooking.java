@@ -16,12 +16,12 @@ public class ValidarBooking {
     }
 
     public void validarBookingSala(Sala sala) {
-        for (Peticion p : peticiones) {
-        	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {
-        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth());
-        		boolean valido = false;
+        for (Peticion p : peticiones) {//bucle con el número de peticiones
+        	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es = a el nombre que pasamos por parametro
+        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los días
+        		boolean valido = false; //creamos un bool para abajo
         		for (int i=0; i>franjaDias; i++) {
-        			llamadaSala.comprobarHorasLibres((p.getFechaFin().getDayOfMonth() + i), hora)
+        			llamadaSala.comprobarHorasLibres((p.getFechaFin().getDayOfMonth() + i), hora) //necesito pasar hora de string a int
         		}
         		
         	} //else EscrituraLog.escribir("Petición incorrecta, la sala no existe" + p.toString());
