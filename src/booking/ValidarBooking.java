@@ -5,26 +5,24 @@ import com.company.Peticion;
 import log.EscrituraLog;
 import booking.Sala;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ValidarBooking {
 
     private List<Peticion> peticiones;
     private ConfigReader idioma = new ConfigReader();
-    private Sala llamadaSala = new Sala();
+    private Sala llamadaSala = new Sala("", 0);
     int [][] horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
     private boolean enMascara; //si el d?a est? dentro de la m?scara = true
+    int[][] partes;
+    private Peticion p = new Peticion("", "", null, null, null, null);
+    
     
 
     public ValidarBooking(List<Peticion> peticiones) {
         this.peticiones = peticiones;
-        
-        //this.idioma = idioma;
-        //this.llamadaSala = llamadaSala;
     }
     
 /////////////
@@ -33,11 +31,11 @@ public class ValidarBooking {
     	do {
         for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-        		int franjaDias = Sala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
-        		horaLimpia = llamadaSala.splitHoras();
+        		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
+        		horaLimpia = splitHoras();
         		for (int i=0; i<franjaDias; i++) {
         			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
-        			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
+        			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
         			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
         			for (int a=0; a<p.getDias().length; a++) {
         				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
@@ -61,11 +59,11 @@ public class ValidarBooking {
     	if (valido) { //Ahora asignamos. Esto deber?a hacerse con un "rollback", como una transcacci?n en SQL
     		for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
             	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-            		int franjaDias = Sala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
-            		horaLimpia = llamadaSala.splitHoras();
+            		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
+            		horaLimpia = splitHoras();
             		for (int i=0; i<franjaDias; i++) {
             			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
-            			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
+            			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
             			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
             			for (int a=0; a<p.getDias().length; a++) {
             				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
@@ -85,39 +83,7 @@ public class ValidarBooking {
     	}
     }
     
-    public void validarConMascara( ) {
-    	
-    }
     
-    public static int getDiaSemana(Date dia){
-    	GregorianCalendar cal = new GregorianCalendar();
-    	cal.setTime(dia);
-    	return cal.get(Calendar.DAY_OF_WEEK);		
-    }
-    
-    public static char[] idiomaMascara(String idioma) { 
-    	if (idioma.equalsIgnoreCase("CAT")) {//LMCJVSG
-    		char [] arrayMascaraCat = {'L', 'M', 'C', 'J', 'V', 'S', 'G'};
-    		return arrayMascaraCat;
-    	}
-    	else if (idioma.equalsIgnoreCase("ESP")) {//LMXJVSD
-    		char [] arrayMascaraEsp = {'L', 'M', 'X', 'J', 'V', 'S', 'D'};
-    		return arrayMascaraEsp;
-    	} else {//MTWHFSN
-    		char [] arrayMascaraEng = {'M', 'T', 'W', 'H', 'F', 'S', 'N'};
-    		return arrayMascaraEng;
-    	}
-    }
-    
-    public String tradMascara(String letraD) {
-		if (letraD.equalsIgnoreCase("l")) return "lunes";
-		else if (letraD.equalsIgnoreCase("m")) return "martes";
-		else if (letraD.equalsIgnoreCase("c")) return "miercoles";
-		else if (letraD.equalsIgnoreCase("j")) return "jueves";
-		else if (letraD.equalsIgnoreCase("v")) return "viernes";
-		else if (letraD.equalsIgnoreCase("s")) return "sabado";
-		else return "domingo";
-	}
     
     public static String idiomaMascara2(String idioma, char letraD) { 
     	if (idioma.equalsIgnoreCase("CAT")) {//LMXJVSD
@@ -148,6 +114,37 @@ public class ValidarBooking {
     	}
     }
     
+    public int[][] splitHoras() {//esto me devuelve las horas limpias y en int
+    	for (int i=0; i<p.getHoras().size(); i++) {
+    		//String linea = p.getHoras()[i];
+    		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
+    		String lineaSucio = arrayList.get(i); //guardo la posición i en un string
+    		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
+    		//partes = [i][linea.split("-")]; //parto el string por "-" y
+    		String[] partesSucio = linea.split("-"); //parto
+    		partes = new int [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamaño que tenga getHoras y de 2, que son la horaIn y horaFin
+    		for (int z=0; z<partesSucio.length; z++) {
+    			partes[i][z]  = Integer.parseInt(partesSucio[z]);//guardo la hora ya limpia en el arraybi partes
+    		}
+    		//horaIn = Integer.parseInt(partes[0]); //los convierto a int y los guardo en las variables static
+    		//horaFin = Integer.parseInt(partes[1]);
+    	}
+    	return partes;	//ARRAY BIDIMENSIONAL PARA PARTES
+    }
+    
+    public static String getDay(int day, int month, int year) {
+		return LocalDate.of(year, month, day).getDayOfWeek().toString();
+	}
+    
+  //Número de horas entre franjas (para hacer el bucle)
+  	public static int franjaHor(int inicio, int fin) {
+  		int numHoras=fin-inicio;
+  		return numHoras;
+  	}
+    
+    
+  	
+  	////////////////////////SIN USO O PARA FUTURAS MEJORAS, NO LEER/////////////////////////////////////////
     /*public static String idiomaMascara2(String idioma, char letraD) { 
     	if (idioma.equalsIgnoreCase("CAT")) {//LMXJVSD
     		if (letraD=='L') return "DILLUNS";//tipos primitivos se comparan con ==
@@ -178,6 +175,33 @@ public class ValidarBooking {
     }*/
     
     
-    
-    ///////////// FALTA ASIGNAR HORAS Y MASCARA
+  	/*static int getDiaSemana(Date dia){
+	GregorianCalendar cal = new GregorianCalendar();
+	cal.setTime(dia);
+	return cal.get(Calendar.DAY_OF_WEEK);		
+}*/
+
+/*public static char[] idiomaMascara(String idioma) { 
+	if (idioma.equalsIgnoreCase("CAT")) {//LMCJVSG
+		char [] arrayMascaraCat = {'L', 'M', 'C', 'J', 'V', 'S', 'G'};
+		return arrayMascaraCat;
+	}
+	else if (idioma.equalsIgnoreCase("ESP")) {//LMXJVSD
+		char [] arrayMascaraEsp = {'L', 'M', 'X', 'J', 'V', 'S', 'D'};
+		return arrayMascaraEsp;
+	} else {//MTWHFSN
+		char [] arrayMascaraEng = {'M', 'T', 'W', 'H', 'F', 'S', 'N'};
+		return arrayMascaraEng;
+	}
+}*/
+
+/*public String tradMascara(String letraD) {
+	if (letraD.equalsIgnoreCase("l")) return "lunes";
+	else if (letraD.equalsIgnoreCase("m")) return "martes";
+	else if (letraD.equalsIgnoreCase("c")) return "miercoles";
+	else if (letraD.equalsIgnoreCase("j")) return "jueves";
+	else if (letraD.equalsIgnoreCase("v")) return "viernes";
+	else if (letraD.equalsIgnoreCase("s")) return "sabado";
+	else return "domingo";
+}*/
 }

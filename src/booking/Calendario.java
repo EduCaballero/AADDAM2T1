@@ -23,7 +23,6 @@ public class Calendario {
  
         String[][] mons = new String[12][8];
         for (int m = 0; m < 12; m++) {
- 
             String name = monthNames[m];
             int len = 11 + name.length() / 2;
             String format = MessageFormat.format("%{0}s%{1}s", len, 21 - len);

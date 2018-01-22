@@ -18,7 +18,7 @@ public class test {
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		//System.out.println(ValidarBooking.getDiaSemana(sdf.parse("2018-1-21")));
 		
-		System.out.println("dia");
+		/*System.out.println("dia");
 		System.out.println(Sala.getDia(21, 01, 2018));
 		
 		System.out.println(Sala.getDay(21, 1, 2018));
