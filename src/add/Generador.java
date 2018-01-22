@@ -5,8 +5,11 @@
  */
 package add;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -33,9 +36,14 @@ public class Generador {
         this.dia = dia;
     }
  private String dia;
+
+  
+ 
     public static void main(String[] args) throws IOException  {
        String[] dias =new String[7];
        String[] horas =new String[24];
+      String horapet="";
+      String diapet="";
       String idiom = "CAT";
       //carga array de dias en funcion del idioma
       diascalendar(idiom,dias);
@@ -80,7 +88,7 @@ public class Generador {
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
           
-          String ruta = "/Applications/XAMPP/xamppfiles/htdocs/ProjectesCat/ADD/src/add/megeneromucho.html";
+          String ruta = "/Applications/XAMPP/xamppfiles/htdocs/ProjectesCat/ADD/src/add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
@@ -101,28 +109,37 @@ public class Generador {
         for(int i = 0;i<dias.length;i++){
             Generador g = new Generador();
             g.setDia(dias[i]);
-            bw.write( "<TH class='mydays'>"+g.getDia()+"</TH>");
+            bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
         }
         bw.write("</TR>");
         for(int i = 0;i<horas.length;i++){
-            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD>");
+            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD> \n");
          for(int x = 0;x<dias.length;x++){
              if(x<5){
                  if(i<=8){
-             bw.write( "<TD class='closed'>close</TD>");     
+             bw.write( "<TD class='closed'>close</TD> ");     
                  }else{
-            bw.write( "<TD class='open'>open</TD>");
+            bw.write( "<TD class='open'>open</TD> \n" );
                  }
              }else{
-              bw.write( "<TD class='closed'>close</TD>");   
+              bw.write( "<TD class='closed'>close</TD> \n");   
              }
         }
-         bw.write( "</TR>");
+         bw.write( "</TR> \n");
         }
          bw.write("  </TABLE> \n" +
 "\n" +
 "</BODY> \n" +
 "</HTML> ");
      bw.close();   
+    }
+    
+    public static void gestionPeticion() throws FileNotFoundException, IOException{
+        FileReader fr = new FileReader("megenero.html");
+        BufferedReader bf = new BufferedReader(fr);
+       String sCadena;
+        while ((sCadena = bf.readLine())!=null) {
+        
+       }
     }
 }

@@ -16,7 +16,8 @@ public class Main {
 
         PeticionReader peticionReader = new PeticionReader();
         peticionReader.readPeticiones();
-
+        
+        
         PeticionValidator peticionValidator = new PeticionValidator(peticionReader.getPeticiones(),
                 configReader.getDate(), configReader.getInputLang());
 
