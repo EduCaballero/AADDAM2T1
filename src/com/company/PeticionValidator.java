@@ -31,7 +31,6 @@ public class PeticionValidator {
                 writeLog(peticion);
             }
         });
-//        peticionesValidas.forEach(System.out::println);
     }
 
     private boolean isValid(Peticion p) {
@@ -42,7 +41,6 @@ public class PeticionValidator {
         }
 
         // Validacion mascara de dias
-        System.out.println(p);
         if (!validateDayMask(p.getDias())) {
             return false;
         }
@@ -75,7 +73,9 @@ public class PeticionValidator {
             }
         }
 
-        if (!found) return false;
+        if (!found) {
+            return false;
+        }
 
         // Comprobar que el orden de la mascara de dias es creciente
         // Es decir, que no ponga Miercoles > Lunes > Viernes sino Lunes > Miercoles > Viernes
@@ -87,14 +87,17 @@ public class PeticionValidator {
                 if (!maskString.matches("([L])?([M])?([X])?([J])?([V])?([S])?([D])?")) {
                     return false;
                 }
+                break;
             case "CAT":
                 if (!maskString.matches("([L])?([M])?([C])?([J])?([V])?([S])?([G])?")) {
                    return false;
                 }
+                break;
             case "ENG":
                 if (!maskString.matches("([M])?([T])?([W])?([H])?([F])?([S])?([N])?")) {
                     return false;
-            }
+                }
+                break;
         }
         return true;
 

@@ -16,7 +16,7 @@ public class ValidarBooking {
     private Sala llamadaSala;
     int [][] horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
-    private boolean enMascara; //si el día está dentro de la máscara = true
+    private boolean enMascara; //si el d?a est? dentro de la m?scara = true
     
 
     public ValidarBooking(List<Peticion> peticiones) {
@@ -25,26 +25,26 @@ public class ValidarBooking {
     
 /////////////
     public void validarBookingSala(Sala sala) {
-    	boolean valido = false; //si una sola vez la hora está ocupada, cierra
+    	boolean valido = false; //si una sola vez la hora est? ocupada, cierra
     	do {
-        for (Peticion p : peticiones) {//bucle con el número de peticiones
+        for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los días
+        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
         		horaLimpia = llamadaSala.splitHoras();
         		for (int i=0; i<franjaDias; i++) {
         			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
-        			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el día que voy a comprobar si está en la máscara. (Monday...)
-        			char [] mascara = p.getDias(); //traigo el array de getDias (que es la máscara)
+        			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
+        			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
         			for (int a=0; a<p.getDias().length; a++) {
         				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
         				if (dia.equalsIgnoreCase(parseMascaraADia)) enMascara=true;
         			}
         			if (enMascara) {
-        				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posición del array bi
+        				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posici?n del array bi
             				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
             				for (int y=0; y<franjaHoras; y++) {
-            					valido=llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un sólo false, ya no valida
-            					if (valido == false) EscrituraLog.escribir("Petición incorrecta por colisión.  " + p.toString());//si la petición da colisión, ya será incorrecta ergo escribimos al log
+            					valido=llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un s?lo false, ya no valida
+            					if (valido == false) EscrituraLog.escribir("Petici?n incorrecta por colisi?n.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
             					//llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[i][1]);//
             				}
             			}
@@ -54,21 +54,21 @@ public class ValidarBooking {
         }
     	} while (valido == true);
     	
-    	if (valido) { //Ahora asignamos. Esto debería hacerse con un "rollback", como una transcacción en SQL
-    		for (Peticion p : peticiones) {//bucle con el número de peticiones
+    	if (valido) { //Ahora asignamos. Esto deber?a hacerse con un "rollback", como una transcacci?n en SQL
+    		for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
             	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-            		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los días
+            		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
             		horaLimpia = llamadaSala.splitHoras();
             		for (int i=0; i<franjaDias; i++) {
             			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
-            			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el día que voy a comprobar si está en la máscara. (Monday...)
-            			char [] mascara = p.getDias(); //traigo el array de getDias (que es la máscara)
+            			dia = Sala.getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
+            			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
             			for (int a=0; a<p.getDias().length; a++) {
             				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
             				if (dia.equalsIgnoreCase(parseMascaraADia)) enMascara=true;
             			}
             			if (enMascara) {
-            				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posición del array bi
+            				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posici?n del array bi
                 				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
                 				for (int y=0; y<franjaHoras; y++) {
                 					llamadaSala.asignarLibre2((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);
@@ -123,7 +123,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "THURSDAY";
     		else if (letraD=='V') return "FRIDAY";
     		else if (letraD=='S') return "SATURDAY";
-    		else return "SUNDAY"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "SUNDAY"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	}
     	else if (idioma.equalsIgnoreCase("ESP")) {//LMXJVSD
     		if (letraD=='L') return "MONDAY";//tipos primitivos se comparan con ==
@@ -132,7 +132,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "THURSDAY";
     		else if (letraD=='V') return "FRIDAY";
     		else if (letraD=='S') return "SATURDAY";
-    		else return "SUNDAY"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "SUNDAY"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	} else {//MTWHFSN
     		if (letraD=='L') return "MONDAY";//tipos primitivos se comparan con ==
     		else if (letraD=='M') return "TUESDAY";
@@ -140,7 +140,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "THURSDAY";
     		else if (letraD=='V') return "FRIDAY";
     		else if (letraD=='S') return "SATURDAY";
-    		else return "SUNDAY"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "SUNDAY"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	}
     }
     
@@ -152,7 +152,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "DIJOUS";
     		else if (letraD=='V') return "DIVENDRES";
     		else if (letraD=='S') return "DISSABTE";
-    		else return "DIUMENGE"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "DIUMENGE"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	}
     	else if (idioma.equalsIgnoreCase("ESP")) {//LMXJVSD
     		if (letraD=='L') return "LUNES";//tipos primitivos se comparan con ==
@@ -161,7 +161,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "JUEVES";
     		else if (letraD=='V') return "VIERNES";
     		else if (letraD=='S') return "SABADO";
-    		else return "DOMINGO"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "DOMINGO"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	} else {//MTWHFSN
     		if (letraD=='L') return "MONDAY";//tipos primitivos se comparan con ==
     		else if (letraD=='M') return "TUESDAY";
@@ -169,7 +169,7 @@ public class ValidarBooking {
     		else if (letraD=='J') return "THURSDAY";
     		else if (letraD=='V') return "FRIDAY";
     		else if (letraD=='S') return "SATURDAY";
-    		else return "SUNDAY"; //ya se comprueba previamente que sólo entren los carácteres válidos
+    		else return "SUNDAY"; //ya se comprueba previamente que s?lo entren los car?cteres v?lidos
     	}
     }*/
     
