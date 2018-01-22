@@ -176,5 +176,5 @@ public int[][] splitHoras() {//esto me devuelve las horas limpias y en int
 /*String cadenaOriginal = "000000543210";
 // La expresión a utilizar sería:
 cadenaResultadoString = cadenaOriginal.replaceFirst ("^0*", "");*/
-
+//
 }

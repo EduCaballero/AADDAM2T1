@@ -23,7 +23,7 @@ public class ValidarBooking {
         this.peticiones = peticiones;
     }
     
-////////////
+/////////////
     public void validarBookingSala(Sala sala) {
     	boolean valido = false; //si una sola vez la hora está ocupada, cierra
     	do {
