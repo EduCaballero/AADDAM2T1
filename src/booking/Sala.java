@@ -1,6 +1,7 @@
 package booking;
 import log.EscrituraLog;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class Sala {
 		if (libre) calendario[dia-1][hora]=1;
 		else EscrituraLog.escribir("mensaje de error al log");
 	}
+	public void asignarLibre2(int dia, int hora) {
+		calendario[dia-1][hora]=1;
+	}
 
 	public boolean comprobarHorasLibres(int dia, int hora) {
 		if (calendario[dia-1][hora]==0) {
@@ -71,13 +75,13 @@ public class Sala {
 		return numHoras;
 	}
 
-	//que d?a es (lunes, martes, mi?rcoles...)
-	public String getDia(int dia, int mes, int anyo) {
+	//que d?a es (lunes, martes, mi?rcoles...) //ESTO FALLA y no sé por qué
+	public static String getDia(int dia, int mes, int anyo) {
 		//String devuelve = "";
 		Calendar c = Calendar.getInstance();
 		c.set(anyo, mes, dia); // vairables int
-		dia = c.get(Calendar.DAY_OF_WEEK);
-		if (dia == Calendar.SUNDAY) {
+		int dia2 = c.get(Calendar.DAY_OF_WEEK);
+		if (dia2 == Calendar.SUNDAY) {
 			//devuelve="domingo";
 			return "domingo";
 		}
@@ -97,6 +101,10 @@ public class Sala {
 			return "viernes";
 		}
 		else return "sabado";
+	}
+	
+	public static String getDay(int day, int month, int year) {
+		return LocalDate.of(year, month, day).getDayOfWeek().toString();
 	}
 
 	////////OTRA SOLUCI?N SER?A

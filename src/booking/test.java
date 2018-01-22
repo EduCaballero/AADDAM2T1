@@ -1,19 +1,27 @@
 package booking;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import booking.ValidarBooking;
+import booking.Sala;
 
 public class test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		//int [][] horaLimpia = new int [4][2];
 		//System.out.println(horaLimpia.length);//saca el 4
 		
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//System.out.println(ValidarBooking.getDiaSemana(sdf.parse("2018-1-21")));
 		
+		System.out.println("dia");
+		System.out.println(Sala.getDia(21, 01, 2018));
 		
+		System.out.println(Sala.getDay(21, 1, 2018));
 		/*int mes, anyo, numDias = 0;
 	    mes = 6;
 	    anyo = 2018;
