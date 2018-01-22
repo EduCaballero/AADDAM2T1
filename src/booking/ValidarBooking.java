@@ -3,6 +3,7 @@ package booking;
 import com.company.ConfigReader;
 import com.company.Peticion;
 import log.EscrituraLog;
+import booking.Sala;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +13,8 @@ import java.util.List;
 public class ValidarBooking {
 
     private List<Peticion> peticiones;
-    private ConfigReader idioma;
-    private Sala llamadaSala;
+    private ConfigReader idioma = new ConfigReader();
+    private Sala llamadaSala = new Sala();
     int [][] horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
     private boolean enMascara; //si el d?a est? dentro de la m?scara = true
@@ -21,6 +22,9 @@ public class ValidarBooking {
 
     public ValidarBooking(List<Peticion> peticiones) {
         this.peticiones = peticiones;
+        
+        //this.idioma = idioma;
+        //this.llamadaSala = llamadaSala;
     }
     
 /////////////
@@ -29,7 +33,7 @@ public class ValidarBooking {
     	do {
         for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-        		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
+        		int franjaDias = Sala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
         		horaLimpia = llamadaSala.splitHoras();
         		for (int i=0; i<franjaDias; i++) {
         			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
@@ -57,7 +61,7 @@ public class ValidarBooking {
     	if (valido) { //Ahora asignamos. Esto deber?a hacerse con un "rollback", como una transcacci?n en SQL
     		for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
             	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
-            		int franjaDias = llamadaSala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
+            		int franjaDias = Sala.franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
             		horaLimpia = llamadaSala.splitHoras();
             		for (int i=0; i<franjaDias; i++) {
             			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle

@@ -23,7 +23,11 @@ public class Peticion {
         this.horas = horas;
     }
 
-    public String getActividad() {
+    public Peticion() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getActividad() {
         return actividad;
     }
 

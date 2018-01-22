@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
+import com.company.ConfigReader;
 import com.company.Peticion;
 
 public class Sala {
 
 	String nombre;
 	int[][] calendario;
-	private Peticion p;
+	private Peticion p = new Peticion();;
 	static int horaIn;
 	static int horaFin;
 	int [][] partes;
@@ -20,6 +21,11 @@ public class Sala {
 	public Sala(String nombre, int horizontal) {
 		this.nombre = nombre;
 		this.calendario = new int [24][horizontal];
+	}
+
+
+	public Sala() {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -70,7 +76,7 @@ public class Sala {
 	}
 
 	//N?mero de horas entre franjas (para hacer el bucle)
-	public int franjaHor(int inicio, int fin) {
+	public static int franjaHor(int inicio, int fin) {
 		int numHoras=fin-inicio;
 		return numHoras;
 	}
