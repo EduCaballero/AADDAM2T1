@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  *
@@ -37,7 +36,7 @@ public class Generador {
     public static void main(String[] args) throws IOException  {
        String[] dias =new String[7];
        String[] horas =new String[24];
-      String idiom = "ESP";
+      String idiom = "CAT";
       //carga array de dias en funcion del idioma
       diascalendar(idiom,dias);
       //carga array de horas
@@ -48,6 +47,7 @@ public class Generador {
     }
 
     public static void diascalendar(String idiom,String[] dias){
+        idiom = idiom.toUpperCase();
         if(idiom.equals("ESP")){
          
           dias[0]="Lunes";dias[1]="Martes";dias[2]="Miercoles";dias[3]="Jueves";dias[4]="Viernes";dias[5]="Sabado";dias[6]="domingo";
@@ -59,7 +59,11 @@ public class Generador {
            
           
         }
-       
+         if(idiom.equals("CAT")){
+         
+          dias[0]="Dilluns";dias[1]="Dimarts";dias[2]="Dimecres";dias[3]="dijous";dias[4]="Divendres";dias[5]="Dissabte";dias[6]="Diumenge";
+          
+        }
     }
       public static void horasCalendario(String[] horas){
           int x = 0;
@@ -76,7 +80,7 @@ public class Generador {
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
           
-          String ruta = "C:\\Users\\usu\\Desktop\\ADD\\src\\add/megenero.html";
+          String ruta = "/Applications/XAMPP/xamppfiles/htdocs/ProjectesCat/ADD/src/add/megeneromucho.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
