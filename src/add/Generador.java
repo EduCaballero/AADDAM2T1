@@ -134,12 +134,22 @@ public class Generador {
      bw.close();   
     }
     
-    public static void gestionPeticion() throws FileNotFoundException, IOException{
+    public static void gestionPeticion(String horaspet,String diaspet,String dias[]) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader("megenero.html");
         BufferedReader bf = new BufferedReader(fr);
-       String sCadena;
+        String sCadena;
+        int myday=0;
         while ((sCadena = bf.readLine())!=null) {
-        
+        if(sCadena .equals(horaspet)){
+            //recoger hora de la peticion para saber que fila es
+            for(int i =0; i<dias.length;i++){
+                if(dias[i].equals(diaspet)){
+                    //recoger numero del dia
+                    myday=i;
+                }
+                
+            }
+        }
        }
     }
 }
