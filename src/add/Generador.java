@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
 
 /**
  *
@@ -87,8 +89,8 @@ public class Generador {
         
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
-          
-          String ruta = "/Applications/XAMPP/xamppfiles/htdocs/ProjectesCat/ADD/src/add/megenero.html";
+      
+          String ruta = "C:\\Users\\Pol\\Desktop\\acces\\src\\add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
@@ -117,7 +119,7 @@ public class Generador {
          for(int x = 0;x<dias.length;x++){
              if(x<5){
                  if(i<=8){
-             bw.write( "<TD class='closed'>close</TD> ");     
+             bw.write( "<TD class='closed'>close</TD> \n");     
                  }else{
             bw.write( "<TD class='open'>open</TD> \n" );
                  }
@@ -137,6 +139,7 @@ public class Generador {
     public static void gestionPeticion(String horaspet,String diaspet,String dias[]) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader("megenero.html");
         BufferedReader bf = new BufferedReader(fr);
+        PrintWriter pw = new PrintWriter(new FileWriter("megenero.html"));
         String sCadena;
         int myday=0;
         while ((sCadena = bf.readLine())!=null) {
@@ -146,9 +149,12 @@ public class Generador {
                 if(dias[i].equals(diaspet)){
                     //recoger numero del dia
                     myday=i;
-                }
+                }   
                 
             }
+            //borrar fila
+                        System.out.print(sCadena);
+                        pw.flush();    
         }
        }
     }
