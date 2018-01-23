@@ -55,7 +55,10 @@ public class Generador {
       generarHtml(dias,horas);   
      
     }
-
+  
+    
+    
+    
     public static void diascalendar(String idiom,String[] dias){
         idiom = idiom.toUpperCase();
         if(idiom.equals("ESP")){
