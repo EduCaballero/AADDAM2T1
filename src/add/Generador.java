@@ -42,24 +42,7 @@ public class Generador {
 
   
  
-    public static void main(String[] args) throws IOException  {
-       String[] dias =new String[7];
-       String[] horas =new String[24];
-      String horapet="09:00-10:00";
-      String diapet="Dimecres";
-      String idiom = "CAT";
-      String sala="my sala";
-      int week=2;
-      //carga array de dias en funcion del idioma
-      diascalendar(idiom,dias);
-      //carga array de horas
-      horasCalendario(horas);
-      //genera documento html
-      //generarHtml(dias,horas);   
-      
-     // gestionPeticion(horapet,diapet,dias,horas,sala,week);
-     
-    }
+    
   
     
     
@@ -144,8 +127,9 @@ public class Generador {
      bw.close();   
     }
     
-    public  void gestionPeticion(String idiom,String horaspet,String diaspet,String dias[],String horas[],String mysala,int week) throws FileNotFoundException, IOException{
-     
+    public void gestionPeticion(String idiom, String mysala,int [][] matriz) throws FileNotFoundException, IOException{
+        String[] dias =new String[7];
+       String[] horas =new String[24];
          diascalendar(idiom,dias);
       //carga array de horas
       horasCalendario(horas);
@@ -166,8 +150,8 @@ public class Generador {
 "\n" +
 "<TABLE BORDER=\"1\"> \n" +
 "<TR> "+
-       "<TH>"+week+"</TH>" );
-        for(int i = 0;i<dias.length;i++){
+       "<TH>jtjgjfgjfj</TH>" );
+        for(int i = 0;i<matriz.length;i++){
             Generador g = new Generador();
             g.setDia(dias[i]);
             bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
@@ -194,6 +178,8 @@ public class Generador {
 "</HTML> ");
      bw.close();   
     }
+
+   
 
    
     

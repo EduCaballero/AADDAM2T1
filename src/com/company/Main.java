@@ -3,14 +3,15 @@ package com.company;
 import add.Generador;
 import booking.Sala;
 import booking.ValidarBooking;
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
 public class Main {
-
-    public static void main(String[] args) {
+     
+    public static void main(String[] args) throws IOException {
 
         ConfigReader configReader = new ConfigReader();
         configReader.readConfig();
@@ -23,7 +24,8 @@ public class Main {
                 configReader.getDate(), configReader.getInputLang());
 
         peticionValidator.validatePeticiones();
-
+        
+        
         LocalDate fecha = configReader.getDate();
         int dias = fecha.getMonth().length(false);
         Sala sala1 = new Sala("Sala1", dias);
@@ -35,9 +37,9 @@ public class Main {
         ValidarBooking validarBooking = new ValidarBooking(request);
 
         validarBooking.validarBookingSala(sala1);
-        
-        
-        Generador generador = new Generador();
-        generador.gestionPeticion(configReader.get);
+     //   (String idiom,String dias[],String horas[], String mysala,int [][] matriz)
+        Generador g = new Generador();
+        g.gestionPeticion(configReader.getOutputLang(), sala1.getNombre(), sala1.getCalendario());
+       
     }
 }
