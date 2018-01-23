@@ -1,5 +1,6 @@
 package com.company;
 
+import add.Generador;
 import booking.Sala;
 import booking.ValidarBooking;
 
@@ -34,5 +35,9 @@ public class Main {
         ValidarBooking validarBooking = new ValidarBooking(request);
 
         validarBooking.validarBookingSala(sala1);
+        
+        
+        Generador generador = new Generador();
+        generador.gestionPeticion(configReader.get);
     }
 }

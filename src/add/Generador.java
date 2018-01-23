@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
  *
@@ -44,15 +45,19 @@ public class Generador {
     public static void main(String[] args) throws IOException  {
        String[] dias =new String[7];
        String[] horas =new String[24];
-      String horapet="";
-      String diapet="";
+      String horapet="09:00-10:00";
+      String diapet="Dimecres";
       String idiom = "CAT";
+      String sala="my sala";
+      int week=2;
       //carga array de dias en funcion del idioma
       diascalendar(idiom,dias);
       //carga array de horas
       horasCalendario(horas);
       //genera documento html
-      generarHtml(dias,horas);   
+      //generarHtml(dias,horas);   
+      
+     // gestionPeticion(horapet,diapet,dias,horas,sala,week);
      
     }
   
@@ -93,7 +98,7 @@ public class Generador {
     }
     public static void generarHtml(String[] dias,String[] horas) throws IOException {
       
-          String ruta = "C:\\Users\\Pol\\Desktop\\acces\\src\\add/megenero.html";
+          String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
@@ -106,7 +111,7 @@ public class Generador {
 "</HEAD> \n" +
 "<BODY> \n" +
 "\n" +
-"<H1>Nombre sala</H1> \n" +
+"<H1>"+"</H1> \n" +
 "\n" +
 "<TABLE BORDER=\"1\"> \n" +
 "<TR> "+
@@ -139,26 +144,57 @@ public class Generador {
      bw.close();   
     }
     
-    public static void gestionPeticion(String horaspet,String diaspet,String dias[]) throws FileNotFoundException, IOException{
-        FileReader fr = new FileReader("megenero.html");
-        BufferedReader bf = new BufferedReader(fr);
-        PrintWriter pw = new PrintWriter(new FileWriter("megenero.html"));
-        String sCadena;
-        int myday=0;
-        while ((sCadena = bf.readLine())!=null) {
-        if(sCadena .equals(horaspet)){
-            //recoger hora de la peticion para saber que fila es
-            for(int i =0; i<dias.length;i++){
-                if(dias[i].equals(diaspet)){
-                    //recoger numero del dia
-                    myday=i;
-                }   
-                
-            }
-            //borrar fila
-                        System.out.print(sCadena);
-                        pw.flush();    
+    public  void gestionPeticion(String idiom,String horaspet,String diaspet,String dias[],String horas[],String mysala,int week) throws FileNotFoundException, IOException{
+     
+         diascalendar(idiom,dias);
+      //carga array de horas
+      horasCalendario(horas);
+            String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
+          File archivo = new File (ruta);
+          BufferedWriter bw;
+          bw = new BufferedWriter(new FileWriter(archivo));
+         
+        
+        bw.write("<HTML> \n" +
+"<HEAD> \n "+
+"<link href=\"myStyles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +                
+"\n" +
+"</HEAD> \n" +
+"<BODY> \n" +
+"\n" +
+"<H1>"+ mysala+"</H1> \n" +
+"\n" +
+"<TABLE BORDER=\"1\"> \n" +
+"<TR> "+
+       "<TH>"+week+"</TH>" );
+        for(int i = 0;i<dias.length;i++){
+            Generador g = new Generador();
+            g.setDia(dias[i]);
+            bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
         }
-       }
+        bw.write("</TR>");
+        for(int i = 0;i<horas.length;i++){
+            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD> \n");
+         for(int x = 0;x<dias.length;x++){
+             if(x<5){
+                 if(i<=8){
+             bw.write( "<TD class='closed'>close</TD> \n");     
+                 }else{
+            bw.write( "<TD class='open'>open</TD> \n" );
+                 }
+             }else{
+              bw.write( "<TD class='closed'>close</TD> \n");   
+             }
+        }
+         bw.write( "</TR> \n");
+        }
+         bw.write("  </TABLE> \n" +
+"\n" +
+"</BODY> \n" +
+"</HTML> ");
+     bw.close();   
     }
+
+   
+    
 }
