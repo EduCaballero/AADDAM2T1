@@ -79,61 +79,14 @@ public class Generador {
           }
         
     }
-    public static void generarHtml(String[] dias,String[] horas) throws IOException {
-      
-          String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
-          File archivo = new File (ruta);
-          BufferedWriter bw;
-          bw = new BufferedWriter(new FileWriter(archivo));
-         
-        
-        bw.write("<HTML> \n" +
-"<HEAD> \n "+
-"<link href=\"myStyles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +                
-"\n" +
-"</HEAD> \n" +
-"<BODY> \n" +
-"\n" +
-"<H1>"+"</H1> \n" +
-"\n" +
-"<TABLE BORDER=\"1\"> \n" +
-"<TR> "+
-       "<TH>xxxxxxxxx</TH>" );
-        for(int i = 0;i<dias.length;i++){
-            Generador g = new Generador();
-            g.setDia(dias[i]);
-            bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
-        }
-        bw.write("</TR>");
-        for(int i = 0;i<horas.length;i++){
-            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD> \n");
-         for(int x = 0;x<dias.length;x++){
-             if(x<5){
-                 if(i<=8){
-             bw.write( "<TD class='closed'>close</TD> \n");     
-                 }else{
-            bw.write( "<TD class='open'>open</TD> \n" );
-                 }
-             }else{
-              bw.write( "<TD class='closed'>close</TD> \n");   
-             }
-        }
-         bw.write( "</TR> \n");
-        }
-         bw.write("  </TABLE> \n" +
-"\n" +
-"</BODY> \n" +
-"</HTML> ");
-     bw.close();   
-    }
-    
+
     public void gestionPeticion(String idiom, String mysala,int [][] matriz) throws FileNotFoundException, IOException{
         String[] dias =new String[7];
        String[] horas =new String[24];
          diascalendar(idiom,dias);
       //carga array de horas
       horasCalendario(horas);
-            String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
+            String ruta = "C:\\Users\\Pol\\Documents\\emty\\src\\add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
@@ -148,23 +101,30 @@ public class Generador {
 "\n" +
 "<H1>"+ mysala+"</H1> \n" +
 "\n" +
-"<TABLE BORDER=\"1\"> \n" +
-"<TR> "+
-       "<TH>jtjgjfgjfj</TH>" );
+"<TABLE id='tables'> \n" +
+"<TR> "+  
+        
+       "<TH>week</TH>" );
         for(int i = 0;i<matriz.length;i++){
             Generador g = new Generador();
             g.setDia(dias[i]);
             bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
         }
         bw.write("</TR>");
-        for(int i = 0;i<horas.length;i++){
-            bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD> \n");
-         for(int x = 0;x<dias.length;x++){
-             if(x<5){
-                 if(i<=8){
+        int x=0;
+        int i =0;
+        while(x<24){
+            bw.write( " <TR>  <TD class='myhours'>"+horas[x]+"</TD> \n");
+         while(i<8){
+             if(i<5){
+                 if(i<8){
              bw.write( "<TD class='closed'>close</TD> \n");     
                  }else{
-            bw.write( "<TD class='open'>open</TD> \n" );
+                     if(matriz[x][i] == 1){
+            bw.write( "<TD class='chosed'>open</TD> \n" );
+                     }else{
+             bw.write( "<TD class='open'>open</TD> \n" );    
+                     }
                  }
              }else{
               bw.write( "<TD class='closed'>close</TD> \n");   
