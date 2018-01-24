@@ -1,5 +1,5 @@
 package booking;
-
+//
 import com.company.ConfigReader;
 import com.company.Peticion;
 import log.EscrituraLog;
@@ -12,12 +12,12 @@ public class ValidarBooking {
 
     private List<Peticion> peticiones;
     private ConfigReader idioma = new ConfigReader();
-    private Sala llamadaSala = new Sala("", 0);
+    private Sala llamadaSala = new Sala("", 0); 
     int [][] horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
     private boolean enMascara; //si el d?a est? dentro de la m?scara = true
     int[][] partes;
-    private Peticion p = new Peticion("", "", null, null, null, null);
+    //private Peticion p = new Peticion("", "", null, null, null, null);
     
     
 
@@ -32,7 +32,7 @@ public class ValidarBooking {
         for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
         		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
-        		horaLimpia = splitHoras();
+        		horaLimpia = splitHoras(p);
         		for (int i=0; i<franjaDias; i++) {
         			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
         			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
@@ -45,7 +45,7 @@ public class ValidarBooking {
         				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posici?n del array bi
             				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
             				for (int y=0; y<franjaHoras; y++) {
-            					valido=llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un s?lo false, ya no valida
+            					valido=sala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un s?lo false, ya no valida
             					if (valido == false) EscrituraLog.escribir("Peticion incorrecta por colision.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
             					//llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[i][1]);//
             				}
@@ -60,7 +60,7 @@ public class ValidarBooking {
     		for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
             	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
             		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
-            		horaLimpia = splitHoras();
+            		horaLimpia = splitHoras(p);
             		for (int i=0; i<franjaDias; i++) {
             			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
             			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
@@ -114,7 +114,7 @@ public class ValidarBooking {
     	}
     }
     
-    public int[][] splitHoras() {//esto me devuelve las horas limpias y en int
+    public int[][] splitHoras(Peticion p) {//esto me devuelve las horas limpias y en int
     	for (int i=0; i<p.getHoras().size(); i++) {
     		//String linea = p.getHoras()[i];
     		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
