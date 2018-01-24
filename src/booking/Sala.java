@@ -1,6 +1,6 @@
 package booking;
 import log.EscrituraLog;
-
+//
 import java.util.Calendar;
 
 public class Sala {

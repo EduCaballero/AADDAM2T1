@@ -41,5 +41,5 @@ public class Main {
         Generador g = new Generador();
         g.gestionPeticion(configReader.getOutputLang(), sala1.getNombre(), sala1.getCalendario());
        
-    }
+    }//
 }
