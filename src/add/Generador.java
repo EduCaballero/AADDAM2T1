@@ -86,7 +86,7 @@ public class Generador {
          diascalendar(idiom,dias);
       //carga array de horas
       horasCalendario(horas);
-            String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
+            String ruta = "C:\\Users\\alu2016425\\Documents\\AADDAM2T1\\src\\add\\megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));

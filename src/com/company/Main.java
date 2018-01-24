@@ -33,6 +33,7 @@ public class Main {
 
         //peticiones valid
         List<Peticion> request = peticionValidator.getPeticionesValidas();
+        request.forEach(System.out::println);
 
         ValidarBooking validarBooking = new ValidarBooking(request);
 

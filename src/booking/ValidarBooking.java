@@ -119,6 +119,7 @@ public class ValidarBooking {
     		//String linea = p.getHoras()[i];
     		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
     		String lineaSucio = arrayList.get(i); //guardo la posicion i en un string
+    		//TODO esto debería ir después del split, ya que sólo me controla el primer 0, no el segundo si lo hubiere
     		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
     		//partes = [i][linea.split("-")]; //parto el string por "-" y
     		String[] partesSucio = linea.split("-"); //parto
