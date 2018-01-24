@@ -56,6 +56,8 @@ public class Sala {
 
 	public boolean comprobarHorasLibres(int dia, int hora) {
 		if (calendario[dia-1][hora]==0) {
+			System.out.println("hola");//TODO
+			System.out.println(dia +" -------"+ hora);
 			return true;
 		}
 		else return false;

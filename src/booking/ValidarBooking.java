@@ -6,23 +6,27 @@ import log.EscrituraLog;
 import booking.Sala;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ValidarBooking {
 
     private List<Peticion> peticiones;
-    private ConfigReader idioma = new ConfigReader();
+    private String idioma;
     private Sala llamadaSala = new Sala("", 0); 
-    int [][] horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
+    private ArrayList<ArrayList<Integer>> horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
     private boolean enMascara; //si el d?a est? dentro de la m?scara = true
-    int[][] partes;
+    ArrayList<ArrayList<Integer>> partes;
     //private Peticion p = new Peticion("", "", null, null, null, null);
     
     
 
-    public ValidarBooking(List<Peticion> peticiones) {
+    public ValidarBooking(String idioma, List<Peticion> peticiones) {
         this.peticiones = peticiones;
+        this.idioma = idioma;
+        this.horaLimpia = new ArrayList<ArrayList<Integer>>();
+        this.partes = new ArrayList<ArrayList<Integer>>();
     }
     
 /////////////
@@ -33,20 +37,27 @@ public class ValidarBooking {
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
         		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
         		horaLimpia = splitHoras(p);
+        		System.out.println("bucle1");
+        		System.out.println(franjaDias);
         		for (int i=0; i<franjaDias; i++) {
         			enMascara=false; //lo fuerza a false para cada vez que de vuelta al bucle
         			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
         			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
+        			System.out.println("bucle2");
         			for (int a=0; a<p.getDias().length; a++) {
-        				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
+        				String parseMascaraADia = idiomaMascara2(idioma, mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
+        				System.out.println("bucle3");
         				if (dia.equalsIgnoreCase(parseMascaraADia)) enMascara=true;
         			}
         			if (enMascara) {
-        				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posici?n del array bi
-            				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
+        				for (int z=0; z<horaLimpia.size(); z++) { //el length da la primera posici?n del array bi
+        					System.out.println("bucle4");
+        					System.out.println(i);
+        					System.out.println(horaLimpia.size());
+        					int franjaHoras = horaLimpia.get(z).get(1) - horaLimpia.get(z).get(0);//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
             				for (int y=0; y<franjaHoras; y++) {
-            					valido=sala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un s?lo false, ya no valida
-            					if (valido == false) EscrituraLog.escribir("Peticion incorrecta por colision.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
+            					valido=sala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia.get(z).get(0)+y);//Si hay un s?lo false, ya no valida
+            					if (!valido) EscrituraLog.escribir("Peticion incorrecta por colision.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
             					//llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[i][1]);//
             				}
             			}
@@ -66,14 +77,14 @@ public class ValidarBooking {
             			dia = getDay((p.getFechaIni().getDayOfMonth() + i), p.getFechaIni().getMonthValue(), p.getFechaIni().getYear());//guardo el d?a que voy a comprobar si est? en la m?scara. (Monday...)
             			char [] mascara = p.getDias(); //traigo el array de getDias (que es la m?scara)
             			for (int a=0; a<p.getDias().length; a++) {
-            				String parseMascaraADia = idiomaMascara2(idioma.getInputLang(), mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
+            				String parseMascaraADia = idiomaMascara2(idioma, mascara[a]); //Ej: Paso de "L" a "MONDAY" para poder comparar
             				if (dia.equalsIgnoreCase(parseMascaraADia)) enMascara=true;
             			}
             			if (enMascara) {
-            				for (int z=0; z<horaLimpia.length; z++) { //el length da la primera posici?n del array bi
-                				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
+            				for (int z=0; z<horaLimpia.size(); z++) { //el length da la primera posici?n del array bi
+                				int franjaHoras = horaLimpia.get(i).get(1) - horaLimpia.get(i).get(0);//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
                 				for (int y=0; y<franjaHoras; y++) {
-                					llamadaSala.asignarLibre2((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);
+                					llamadaSala.asignarLibre2((p.getFechaIni().getDayOfMonth() + i), horaLimpia.get(z).get(y));
                 				}
                 			}
             			}
@@ -114,8 +125,10 @@ public class ValidarBooking {
     	}
     }
     
-    public int[][] splitHoras(Peticion p) {//esto me devuelve las horas limpias y en int
+    public ArrayList<ArrayList<Integer>> splitHoras(Peticion p) {//esto me devuelve las horas limpias y en int
+		partes = new ArrayList<ArrayList<Integer>>(); 
     	for (int i=0; i<p.getHoras().size(); i++) {
+    		partes.add(new ArrayList<Integer>());
     		//String linea = p.getHoras()[i];
     		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
     		String lineaSucio = arrayList.get(i); //guardo la posicion i en un string
@@ -123,9 +136,10 @@ public class ValidarBooking {
     		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
     		//partes = [i][linea.split("-")]; //parto el string por "-" y
     		String[] partesSucio = linea.split("-"); //parto
-    		partes = new int [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamo que tenga getHoras y de 2, que son la horaIn y horaFin
+    		// [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamo que tenga getHoras y de 2, que son la horaIn y horaFin
     		for (int z=0; z<partesSucio.length; z++) {
-    			partes[i][z]  = Integer.parseInt(partesSucio[z]);//guardo la hora ya limpia en el arraybi partes
+    			int elem = Integer.parseInt(partesSucio[z]);
+    			partes.get(i).add(elem); // guardo la hora ya limpia en el arraybi partes
     		}
     		//horaIn = Integer.parseInt(partes[0]); //los convierto a int y los guardo en las variables static
     		//horaFin = Integer.parseInt(partes[1]);
@@ -138,7 +152,8 @@ public class ValidarBooking {
 	}
     
   //Numero de horas entre franjas (para hacer el bucle)
-  	public static int franjaHor(int inicio, int fin) {
+  	public static int franjaHor(int fin, int inicio) {
+  		System.out.println(inicio +" ----- "+ fin);
   		int numHoras=fin-inicio;
   		return numHoras;
   	}

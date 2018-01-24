@@ -29,13 +29,19 @@ public class Main {
         LocalDate fecha = configReader.getDate();
         int dias = fecha.getMonth().length(false);
         Sala sala1 = new Sala("Sala1", dias);
+        /*for (int[] a:sala1.getCalendario()) {
+        	for (int b : a) {
+        		System.out.println(b);	
+        	}
+        }*/
+        
         Sala sala2 = new Sala("Sala2", dias);
 
         //peticiones valid
         List<Peticion> request = peticionValidator.getPeticionesValidas();
         request.forEach(System.out::println);
 
-        ValidarBooking validarBooking = new ValidarBooking(request);
+        ValidarBooking validarBooking = new ValidarBooking(configReader.getInputLang(), request);
 
         validarBooking.validarBookingSala(sala1);
      //   (String idiom,String dias[],String horas[], String mysala,int [][] matriz)
