@@ -34,9 +34,17 @@ public class PeticionValidator {
     }
 
     private boolean isValid(Peticion p) {
-        // Si la fecha de inicio o la fecha fin no tienen el mismo mes que la fecha de config.txt
+        // Si la fecha de inicio es posterior a la fecha de fin
         // la peticion no es valida
-        if (!date.getMonth().equals(p.getFechaIni().getMonth()) || !date.getMonth().equals(p.getFechaFin().getMonth())) {
+        if (p.getFechaIni().isAfter(p.getFechaFin())) {
+            return false;
+        }
+        // Si la fecha de inicio o la fecha fin no tienen el mismo mes y año que la fecha de config.txt
+        // la peticion no es valida
+        if (!date.getMonth().equals(p.getFechaIni().getMonth()) ||
+                !date.getMonth().equals(p.getFechaFin().getMonth()) ||
+                date.getYear() != p.getFechaIni().getYear() ||
+                date.getYear() != p.getFechaFin().getYear()) {
             return false;
         }
 
