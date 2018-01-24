@@ -46,7 +46,7 @@ public class ValidarBooking {
             				int franjaHoras = horaLimpia[i][1] - horaLimpia[i][0];//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
             				for (int y=0; y<franjaHoras; y++) {
             					valido=llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[z][y]);//Si hay un s?lo false, ya no valida
-            					if (valido == false) EscrituraLog.escribir("Petici?n incorrecta por colisi?n.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
+            					if (valido == false) EscrituraLog.escribir("Peticion incorrecta por colision.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
             					//llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[i][1]);//
             				}
             			}
@@ -118,11 +118,11 @@ public class ValidarBooking {
     	for (int i=0; i<p.getHoras().size(); i++) {
     		//String linea = p.getHoras()[i];
     		List<String> arrayList = p.getHoras(); //traigo el arrayList de string que contiene las franjas horarias
-    		String lineaSucio = arrayList.get(i); //guardo la posición i en un string
+    		String lineaSucio = arrayList.get(i); //guardo la posicion i en un string
     		String linea = lineaSucio.replaceFirst("^0*", "");//por si acaso hay un 0 delante, eliminarlo y que int no lo tome como octal		
     		//partes = [i][linea.split("-")]; //parto el string por "-" y
     		String[] partesSucio = linea.split("-"); //parto
-    		partes = new int [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamaño que tenga getHoras y de 2, que son la horaIn y horaFin
+    		partes = new int [p.getHoras().size()][partesSucio.length];//hago un array bidimensional del tamo que tenga getHoras y de 2, que son la horaIn y horaFin
     		for (int z=0; z<partesSucio.length; z++) {
     			partes[i][z]  = Integer.parseInt(partesSucio[z]);//guardo la hora ya limpia en el arraybi partes
     		}
@@ -136,7 +136,7 @@ public class ValidarBooking {
 		return LocalDate.of(year, month, day).getDayOfWeek().toString();
 	}
     
-  //Número de horas entre franjas (para hacer el bucle)
+  //Numero de horas entre franjas (para hacer el bucle)
   	public static int franjaHor(int inicio, int fin) {
   		int numHoras=fin-inicio;
   		return numHoras;
