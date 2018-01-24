@@ -86,12 +86,17 @@ public class Generador {
          diascalendar(idiom,dias);
       //carga array de horas
       horasCalendario(horas);
-            String ruta = "C:\\Users\\Pol\\Documents\\emty\\src\\add/megenero.html";
+            String ruta = "/Users/DAM/AADDAM2T1/src/add/megenero.html";
           File archivo = new File (ruta);
           BufferedWriter bw;
           bw = new BufferedWriter(new FileWriter(archivo));
          
-        
+         for (int i = 0; i < 24; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(matriz[i][j]);
+               
+            }
+        }
         bw.write("<HTML> \n" +
 "<HEAD> \n "+
 "<link href=\"myStyles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +                
@@ -105,32 +110,39 @@ public class Generador {
 "<TR> "+  
         
        "<TH>week</TH>" );
-        for(int i = 0;i<matriz.length;i++){
+        for(int i = 0;i<dias.length;i++){
             Generador g = new Generador();
             g.setDia(dias[i]);
             bw.write( "<TH class='mydays'>"+g.getDia()+"</TH> \n");
         }
         bw.write("</TR>");
-        int x=0;
+        int j=0;
         int i =0;
-        while(x<24){
-            bw.write( " <TR>  <TD class='myhours'>"+horas[x]+"</TD> \n");
-         while(i<8){
-             if(i<5){
-                 if(i<8){
-             bw.write( "<TD class='closed'>close</TD> \n");     
-                 }else{
-                     if(matriz[x][i] == 1){
-            bw.write( "<TD class='chosed'>open</TD> \n" );
-                     }else{
-             bw.write( "<TD class='open'>open</TD> \n" );    
-                     }
-                 }
-             }else{
-              bw.write( "<TD class='closed'>close</TD> \n");   
-             }
+        
+        
+        for (i = 0; i < horas.length; i++) {
+             bw.write( " <TR>  <TD class='myhours'>"+horas[i]+"</TD> \n");
+            for (j = 0; j < dias.length; j++) {
+                if(i>=8){
+                if(j<5){
+              
+               
+               if(matriz[i][j]==1){
+                   bw.write( "<TD class='chosed'>open</TD> \n" );
+               }else{
+                  bw.write( "<TD class='open'>open</TD> \n" ); 
+               }
+               
+                }
+                
+                if(j>4){
+                  bw.write( "<TD class='closed'>close</TD> \n" );   
+                }
+           }else{
+                 bw.write( "<TD class='closed'>close</TD> \n" );    
+           }
         }
-         bw.write( "</TR> \n");
+        
         }
          bw.write("  </TABLE> \n" +
 "\n" +
