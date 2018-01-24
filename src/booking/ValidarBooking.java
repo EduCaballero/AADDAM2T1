@@ -1,5 +1,5 @@
 package booking;
-//
+
 import com.company.ConfigReader;
 import com.company.Peticion;
 import log.EscrituraLog;
