@@ -64,8 +64,8 @@ public class PeticionReader {
 
         // Dividimos el string de horas y lo colocamos en un arraylist de franjas horarias (xx-xx)
         List<String> horas = new ArrayList<>(Arrays.asList(horasData));
-        // Como maximo puede tener 5 franjas horarias.
-        if (horas.size() > 5) {
+        // Como minimo, ha detener una franja horaria y como maximo puede tener 5.
+        if (horas.size() > 5 || horas.size() == 0) {
             return null;
         }
         return new Peticion(peticionData[0], peticionData[1], fechaIni, fechaFin, dias, horas);
