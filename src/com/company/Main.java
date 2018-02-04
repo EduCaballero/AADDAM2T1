@@ -28,14 +28,10 @@ public class Main {
         
         LocalDate fecha = configReader.getDate();
         int dias = fecha.getMonth().length(false);
-        Sala sala1 = new Sala("Sala1", dias);
-        /*for (int[] a:sala1.getCalendario()) {
-        	for (int b : a) {
-        		System.out.println(b);
-        	}
-        }*/
+        //Sala sala1 = new Sala("Sala1", dias);
+        Sala sala1 = new Sala("Sala1");
 
-        Sala sala2 = new Sala("Sala2", dias);
+        //Sala sala2 = new Sala("Sala2", dias);
 
         //peticiones valid
         List<Peticion> request = peticionValidator.getPeticionesValidas();
@@ -44,9 +40,19 @@ public class Main {
         ValidarBooking validarBooking = new ValidarBooking(configReader.getInputLang(), request);
 
         validarBooking.validarBookingSala(sala1);
-     //   (String idiom,String dias[],String horas[], String mysala,int [][] matriz)
-        Generador g = new Generador();
-        g.gestionPeticion(configReader.getOutputLang(), sala1.getNombre(), sala1.getCalendario());
+        
+        
+        /////
+        /*for (int[] a:sala1.getCalendario()) {
+        	for (int b : a) {
+        		System.out.println(b);
+        	}
+        }*/
+        /////
+        
+     //(String idiom,String dias[],String horas[], String mysala,int [][] matriz);
+       // Generador g = new Generador();
+       // g.gestionPeticion(configReader.getOutputLang(), sala1.getNombre(), sala1.getCalendario());
 
     }//
 }

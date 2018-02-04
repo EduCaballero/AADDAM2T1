@@ -13,9 +13,9 @@ public class Sala {
 	int [][] partes;
 	//int [][] horaLimpia;
 
-	public Sala(String nombre, int horizontal) {
+	public Sala(String nombre) {
 		this.nombre = nombre;
-		this.calendario = new int [24][horizontal];
+		this.calendario = new int [30][24];
 	}
 
 	public String getNombre() {
@@ -51,14 +51,18 @@ public class Sala {
 		else EscrituraLog.escribir("mensaje de error al log");
 	}
 	public void asignarLibre2(int dia, int hora) {
+		System.out.println(getCalendario().length);
+		System.out.println(dia-1);
+		System.out.println(hora);
 		calendario[dia-1][hora]=1;
+		System.out.println("Escrito: "+calendario[dia-1][hora]);
 	}
 
 	public boolean comprobarHorasLibres(int dia, int hora) {
-		if (calendario[dia-1][hora]==0) {
+		if (calendario[dia-1][hora]==0) {//-1 porque el array empieza desde el 0.
 			System.out.println("hola");//TODO
 			System.out.println(dia +" -------"+ hora);
-			return true;
+			return true;//si est´libre, devuelvo true
 		}
 		else return false;
 	}

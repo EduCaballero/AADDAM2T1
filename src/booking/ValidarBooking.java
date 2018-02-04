@@ -13,7 +13,8 @@ public class ValidarBooking {
 
     private List<Peticion> peticiones;
     private String idioma;
-    private Sala llamadaSala = new Sala("", 0); 
+    //private Sala llamadaSala = new Sala("", 0);
+    private Sala llamadaSala = new Sala("");
     private ArrayList<ArrayList<Integer>> horaLimpia; //la hora ya limpia, sin 0 a la izquierda y parseada a int
     private String dia;
     private boolean enMascara; //si el d?a est? dentro de la m?scara = true
@@ -32,7 +33,7 @@ public class ValidarBooking {
 /////////////
     public void validarBookingSala(Sala sala) {
     	boolean valido = false; //si una sola vez la hora est? ocupada, cierra
-    	do {
+    	//do {
         for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
         	if (p.getEspacio().equalsIgnoreCase(sala.getNombre())) {//si el nombre de la sala es == a el nombre que pasamos por parametro
         		int franjaDias = franjaHor(p.getFechaFin().getDayOfMonth(), p.getFechaIni().getDayOfMonth()); //guardamos la franja de los d?as
@@ -58,6 +59,8 @@ public class ValidarBooking {
             				for (int y=0; y<franjaHoras; y++) {
             					valido=sala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia.get(z).get(0)+y);//Si hay un s?lo false, ya no valida
             					if (!valido) EscrituraLog.escribir("Peticion incorrecta por colision.  " + p.toString());//si la petici?n da colisi?n, ya ser? incorrecta ergo escribimos al log
+            					//hasta aquí entra todo perfecto, si no soluciono el resto, meter aquí el escribir en el calendario ya tomar viento
+            					//sería buena idea meter un break en ese if de arriba última, para que si hay colisión pete directamente
             					//llamadaSala.comprobarHorasLibres((p.getFechaIni().getDayOfMonth() + i), horaLimpia[i][1]);//
             				}
             			}
@@ -65,7 +68,7 @@ public class ValidarBooking {
         		}
         	} 
         }
-    	} while (valido == true);
+    	//} while (valido == true);
     	
     	if (valido) { //Ahora asignamos. Esto deber?a hacerse con un "rollback", como una transcacci?n en SQL
     		for (Peticion p : peticiones) {//bucle con el n?mero de peticiones
@@ -82,15 +85,23 @@ public class ValidarBooking {
             			}
             			if (enMascara) {
             				for (int z=0; z<horaLimpia.size(); z++) { //el length da la primera posici?n del array bi
-                				int franjaHoras = horaLimpia.get(i).get(1) - horaLimpia.get(i).get(0);//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
+                				int franjaHoras = horaLimpia.get(z).get(1) - horaLimpia.get(z).get(0);//guardamos la franja horaria para comprobar todas las horas entre horaIn y horaFin
                 				for (int y=0; y<franjaHoras; y++) {
-                					llamadaSala.asignarLibre2((p.getFechaIni().getDayOfMonth() + i), horaLimpia.get(z).get(y));
+                					//System.out.println("Antes día: "+p.getFechaIni().getDayOfMonth() + i);
+                					//System.out.println("Antes hora: "+horaLimpia.get(z).get(0)+y);
+                					llamadaSala.asignarLibre2((p.getFechaIni().getDayOfMonth() + i), horaLimpia.get(z).get(0)+y);
                 				}
                 			}
             			}
             		}
             	}
             }
+    	}
+    	
+    	for (int i=0; i<30; i++) {
+    		for (int z=0; z<24; z++ ) {
+    			System.out.println(llamadaSala.calendario[i][z]);
+    		}
     	}
     }
     
